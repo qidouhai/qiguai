@@ -1,20 +1,34 @@
 <?php
-//这个post文件是测试文件
 $searchkeyword = $_POST["souname"];
-//这里的变量是临时测试
 $u = "https://www.zhihu.com/api/v4/columns/c_1261258401923026944/items";
 
+
   
-function be($u){
+
 $response = file_get_contents($u);
- $e = json_decode($response,true);
-   
-$counts = substr_count($e,$searchkeyword); 
+
+ $arr= json_decode($response,true);
+
+/** 
+* @method 多维数组转字符串 
+* @param type $array 
+* @return type $srting 
+* @author yanhuixian 
+*/ 
+function arrayToString($arr) { 
+if (is_array($arr)){ 
+return implode(',', array_map('arrayToString', $arr)); 
+} 
+return $arr; 
+}
+$arr = arrayToString($arr);
+
+
+$counts = substr_count($arr,$searchkeyword); 
 if($counts >0){
-echo $u;
+echo 2;
 }else{
-echo "未找到结果";
+echo 1;
 }
-}
-be($u);
+
 ?>

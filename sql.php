@@ -15,11 +15,11 @@ if (!$conn) {
 $sql = "CREATE TABLE urltablefirst (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 name VARCHAR(20) NOT NULL,
-jsonurl VARCHAR(60) NOT NULL,
-url VARCHAR(20) NOT NULL,
-type VARCHAR(20) NOT NULL,
+jsonurl VARCHAR(250) NOT NULL,
+url VARCHAR(250) NOT NULL,
+type INT(20) NOT NULL,
 times INT(20) NOT NULL
-)";
+)ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000";
  
 if (mysqli_query($conn, $sql)) {
     echo "数据表 urltablefirst 创建成功";

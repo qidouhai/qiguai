@@ -10,16 +10,15 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (!$conn) {
     die("连接失败: " . mysqli_connect_error());
 }
-
 // 使用 sql 创建数据表
+
 $sql = "CREATE TABLE urltablefirst (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 name VARCHAR(20) NOT NULL,
 jsonurl VARCHAR(60) NOT NULL,
 url VARCHAR(20) NOT NULL,
 type VARCHAR(20) NOT NULL,
-times INT(20) NOT NULL,
-reg_date TIMESTAMP
+times INT(20) NOT NULL
 )";
  
 if (mysqli_query($conn, $sql)) {

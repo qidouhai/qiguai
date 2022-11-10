@@ -1,66 +1,10 @@
 <?php
-header('content-type:text/html;charset=utf-8');   
+//接收内容
 $searchkeyword = $_POST["souname"];
-
-//url验证
-$url = $_POST["upjson"];
-function or_url($url){
-
-if (filter_var($url, FILTER_VALIDATE_URL) !== false) {
-
-echo 'url 地址正确';
-
-}else{
-
-echo 'url 地址不正确';
-
-}
-
-}
-//初始化数据
-$n=0;
-if($n==0){
-$u = "https://www.zhihu.com/api/v4/columns/c_1261258401923026944/items";
-}
-$rrr = "wwwwwwwww";
-//json 判定格式
-
-     
-function f($val){
-	if(is_array($val)){
-	//该变量是数组类型
-		return 1;
-	}else{
-	//该变量不是数组类型
-		return 2;
-	}
-}
-
-
-$rrr = file_get_contents($rrr);
-$jiancea = json_decode($rrr,true);
-$nojson=f($jiancea);
-
-$uuu = file_get_contents($u);
-$jianceu = json_decode($uuu,true);
-$yesjson=f($jianceu);
-
-//json 赋值给变量
-
-if( $_POST["upjson"]||$ysejson=1){
-$n=$n+1;
-$a+$n= $_POST["upjson"];
-}
-if($n>1000){
-echo "服务器繁忙，请稍后再试";
-}
-
-
 //域名获取
- 
- 
 header('content-type:text/html;charset=utf-8');
- $url = $u;
+$u = "https://www.zhihu.com/api/v4/columns/c_1261258401923026944/items";
+$url =$u;
 //获取顶级域名
 function getTopHost($url){
 	$url = strtolower($url);   //首先转成小写
@@ -92,58 +36,7 @@ $url=$url1;
 }else{
 $url=$url2;
 };
-
-
-
-/**
-后期备用
-* 取得根域名
-
-* @param type $domain 域名
-
-* @return string 返回根域名
-
-*/
-//$domain = $u;
-/*
-function GetUrlToDomain($domain) {
-
-$re_domain = "";
-
-$domain_postfix_cn_array = array("com", "net", "org", "gov", "edu", "com.cn", "cn");
-
-$array_domain = explode(".", $domain);
-
-$array_num = count($array_domain) - 1;
-
-if ($array_domain[$array_num] == "cn") {
-
-if (in_array($array_domain[$array_num - 1], $domain_postfix_cn_array)) {
-
-$re_domain = $array_domain[$array_num - 2] . "." . $array_domain[$array_num - 1] . "." . $array_domain[$array_num];
-
-} else {
-
-$re_domain = $array_domain[$array_num - 1] . "." . $array_domain[$array_num];
-
-}
-
-} else {
-
-$re_domain = $array_domain[$array_num - 1] . "." . $array_domain[$array_num];
-
-}
-
-return $re_domain;
-
-}
-$genurl=GetUrlToDomain($domain);
-
-*/
-
 /*json  内容获取 */
-  
-
 $response = file_get_contents($u);
 
  $arr= json_decode($response,true);
@@ -162,10 +55,9 @@ return $arr;
 }
 $arr = arrayToString($arr);
 
-
 $counts = substr_count($arr,$searchkeyword); 
 if($counts >0){
-echo "<a href=".$url.">$url</a>";
+echo "<a href=".$url.">".$url."</a>";
 }else{
 echo 1;
 }

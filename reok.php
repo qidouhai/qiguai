@@ -4,10 +4,38 @@ session_start();
  $upjson = $_SESSION['upjson'];
  $upjsonsite=$_SESSION['upjsonsite'];
  $upjsonsitename = $_SESSION['upjsonsitename'];
+include ("sqlcon.php");
 
+$sql  = "select id,name,jsonurl,url,type,times from urltablefirst"; 
+$result = mysqli_query($conn,$sql);
+while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+      
+      $oldjsonurl=$row["jsonurl"];
+      $oldurl=$row["url"];
+if($upjson==$oldjsonurl){
+echo "这个json已存在</br>";
+echo<<<EOT
+<a href="http://www.hihot.cn/tijiao.html" class="dropdown-toggle">
+               返回修改
+              </a>
+EOT;
+die;
+} 
+} 
+   
+
+   
+ 
+ if ($result){
+    $n=mysql_num_rows($result);
+  }else{
+    $n=0;
+  }    		 
+			 
 //初始化数据
+
+if($n==null){
 $n=0;
-if($n==0){
 $u = "https://www.zhihu.com/api/v4/columns/c_1261258401923026944/items";
 }
 $rrr = "wwwwwwwww";
@@ -60,14 +88,20 @@ $sum[upjson][name]= $u;
 $sum[upjsonsite][name] = "www.zhihu.com";
 $sum[upjsonsitename][name] = "网站标题占位 ";
 }
-include ("sqlcon.php");
+
 if($n<1000||$n>0){
 //echo "<pre>"; print_r($sum); echo "<pre>";
 $sql = "INSERT INTO `urltablefirst`(`id`, `name`, `jsonurl`, `url`, `type`, `times`) VALUES ('{$n}','{$sum[upjsonsitename][name]}','{$sum[upjson][name]}','{$sum[upjsonsite][name]}','{$sum[urltype][name]}','{$n}')";
-mysqli_query($conn,$sql);
+$re=mysqli_query($conn,$sql);
+		   //结束语句
+   mysqli_free_result($result);
+mysqli_free_result($re);
+   //关闭连接
+   mysqli_close($conn);
+		echo "<script>alert('添加成功');location.href='http://www.hihot.cn/sousuo.html';</script>";
 		
-		echo "<script>alert('添加成功');location.href='../sousuo.html';</script>";
 }else{
-echo "<script>alert('稍后尝试');location.href='../sousuo.html';</script>";
+echo "<script>alert('稍后尝试');location.href='http://www.hihot.cn/sousuo.html';</script>";
+
 }
 ?>

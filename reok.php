@@ -4,6 +4,7 @@ session_start();
  $upjson = $_SESSION['upjson'];
  $upjsonsite=$_SESSION['upjsonsite'];
  $upjsonsitename = $_SESSION['upjsonsitename'];
+ $upsign = $_SESSION['sign'];
 include ("sqlcon.php");
 
 $sql  = "select id,name,jsonurl,url,type,times from urltablefirst"; 
@@ -15,11 +16,10 @@ while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 if($upjson==$oldjsonurl){
 echo "这个json已存在</br>";
 echo<<<EOT
-<a href="http://www.hihot.cn/tijiao.html" class="dropdown-toggle">
+<a href="tijiao.html" class="dropdown-toggle">
                返回修改
               </a>
 EOT;
-die;
 } 
 } 
    
@@ -27,7 +27,7 @@ die;
    
  
  if ($result){
-    $n=mysql_num_rows($result);
+    $n=mysqli_num_rows($result);
   }else{
     $n=0;
   }    		 
@@ -70,12 +70,13 @@ $sum[urltype][n] = $n;
 $sum[upjson][n]= $n;
 $sum[upjsonsite][n] = $n;
 $sum[upjsonsitename][n] = $n;
+$sum[upsign][n] = $n;
 
 $sum[urltype][name] = $urltype;
 $sum[upjson][name]= $upjson;
 $sum[upjsonsite][name] = $upjsonsite;
 $sum[upjsonsitename][name] = $upjsonsitename;
-
+$sum[upsign] = $upsign;
 
 }
 if($n>1000){
@@ -87,21 +88,22 @@ $sum[urltype][name] = 0 ;
 $sum[upjson][name]= $u;
 $sum[upjsonsite][name] = "www.zhihu.com";
 $sum[upjsonsitename][name] = "网站标题占位 ";
+$sum[upsign] = "zhihu";
 }
 
 if($n<1000||$n>0){
 //echo "<pre>"; print_r($sum); echo "<pre>";
-$sql = "INSERT INTO `urltablefirst`(`id`, `name`, `jsonurl`, `url`, `type`, `times`) VALUES ('{$n}','{$sum[upjsonsitename][name]}','{$sum[upjson][name]}','{$sum[upjsonsite][name]}','{$sum[urltype][name]}','{$n}')";
-$re=mysqli_query($conn,$sql);
+$sqlp = "INSERT INTO `urltablefirst`(`id`, `name`, `jsonurl`, `url`, 'sign',`type`, `times`) VALUES ('{$n}','{$sum[upjsonsitename][name]}','{$sum[upjson][name]}','{$sum[upjsonsite][name]}','$sum[upsign]','{$sum[urltype][name]}','{$n}')";
+$re=mysqli_query($conn,$sqlp);
 		   //结束语句
    mysqli_free_result($result);
 mysqli_free_result($re);
    //关闭连接
    mysqli_close($conn);
-		echo "<script>alert('添加成功');location.href='http://www.hihot.cn/sousuo.html';</script>";
+		echo "<script>alert('添加成功');location.href='sousuo.html';</script>";
 		
 }else{
-echo "<script>alert('稍后尝试');location.href='http://www.hihot.cn/sousuo.html';</script>";
+echo "<script>alert('稍后尝试');location.href='sousuo.html';</script>";
 
 }
 ?>

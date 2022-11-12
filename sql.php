@@ -1,6 +1,6 @@
 <?php
 $servername = "localhost";
-$username = "qiguai";
+$username = "_qiguai";
 $password = "123456";
 $dbname = "qiguai";
  
@@ -17,6 +17,7 @@ id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(20) NOT NULL,
 jsonurl VARCHAR(250) NOT NULL,
 url VARCHAR(250) NOT NULL,
+sign VARCHAR(100) NOT NULL,
 type INT(20) NOT NULL,
 times INT(20) NOT NULL
 )ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1000";

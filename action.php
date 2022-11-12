@@ -1,15 +1,23 @@
 <?php
+session_start();
 header('content-type:text/html;charset=utf-8');   
 //接收内容
 
 $urltype = $_POST["urltype"];  //站点/小程序/app的类型 （1 网站 2 小程序 3 app ）
 
-$upjson =  $_POST["upjson"];    //json网址链接
+$upjson = trim($_POST["upjson"]);    //json网址链接
 
-$upjsonsite =  $_POST["upjsonsite"];  //站点网址链接
+$upjsonsite = trim($_POST["upjsonsite"]);  //站点网址链接
 
-$upjsonsitename =  $_POST["upjsonsitename"];   //站点名称
+$upjsonsitename =  trim($_POST["upjsonsitename"]);   //站点名称
 
+$upsign = trim($_POST["sign"]);    //站点标识
+
+$_SESSION['urltype'] = $urltype;
+$_SESSION['upjson'] = $upjson;
+$_SESSION['upjsonsite'] = $upjsonsite;
+$_SESSION['upjsonsitename'] = $upjsonsitename;
+$_SESSION['sign'] = $upsign;
 
 
 //url验证
@@ -46,7 +54,7 @@ echo  "类型：APP"."</br>";
  echo "JSON：".$upjson."</br>";
 echo "网址：".$upjsonsite."</br>";
 echo "网站名称：".$upjsonsitename."</br>";
-
+echo "网站标识：".$upsign."</br>";
 echo<<<EOT
 <a href="javascript:history.back(-1)" class="dropdown-toggle">
                返回修改

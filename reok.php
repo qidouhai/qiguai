@@ -16,7 +16,7 @@ while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 if($upjson==$oldjsonurl){
 echo "这个json已存在</br>";
 echo<<<EOT
-<a href="tijiao.html" class="dropdown-toggle">
+<a href="http://www.hihot.cn/tijiao.html" class="dropdown-toggle">
                返回修改
               </a>
 EOT;
@@ -93,17 +93,17 @@ $sum[upsign] = "zhihu";
 
 if($n<1000||$n>0){
 //echo "<pre>"; print_r($sum); echo "<pre>";
-$sqlp = "INSERT INTO `urltablefirst`(`id`, `name`, `jsonurl`, `url`, 'sign',`type`, `times`) VALUES ('{$n}','{$sum[upjsonsitename][name]}','{$sum[upjson][name]}','{$sum[upjsonsite][name]}','$sum[upsign]','{$sum[urltype][name]}','{$n}')";
+$sqlp = "INSERT INTO `urltablefirst`(`id`, `name`, `jsonurl`, `url`, `sign`, `type`, `times`) VALUES ('{$n}','{$sum[upjsonsitename][name]}','{$sum[upjson][name]}','{$sum[upjsonsite][name]}','{$sum[upsign]}','{$sum[urltype][name]}','{$n}')";
 $re=mysqli_query($conn,$sqlp);
 		   //结束语句
    mysqli_free_result($result);
 mysqli_free_result($re);
    //关闭连接
    mysqli_close($conn);
-		echo "<script>alert('添加成功');location.href='sousuo.html';</script>";
+		echo "<script>alert('添加成功');location.href='http://www.hihot.cn/sousuo.html';</script>";
 		
 }else{
-echo "<script>alert('稍后尝试');location.href='sousuo.html';</script>";
+echo "<script>alert('稍后尝试');location.href='http://www.hihot.cn/sousuo.html';</script>";
 
 }
 ?>

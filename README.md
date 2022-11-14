@@ -6,4 +6,4 @@
 2022.114 更新json 字符串初步匹配关键字成功
 2022.116 用户表单简单验证完成
 2022.1110搜索显示
-[image](https://github.com/qidouhai/qiguai/blob/main/Snipaste_2022-11-14_10-16-31.png)
+![image](https://github.com/qidouhai/qiguai/blob/main/Snipaste_2022-11-14_10-16-31.png)

@@ -39,10 +39,79 @@ $urlzhuangtai_1=or_url($upjson);
 $urlzhuangtai_2=or_url($upjsonsite);
 
 
+/**
+
+* 解析json串
+
+* @param type $json_str
+
+* @return type
+
+*/
+
+function analyJson($json_str) {
+
+$json_str = str_replace('＼＼', '', $json_str);
+
+$out_arr = array();
+
+preg_match('/{.*}/', $json_str, $out_arr);
+
+if (!empty($out_arr)) {
+
+$result = json_decode($out_arr[0], TRUE);
+
+} else {
+
+return FALSE;
+
+}
+
+return $result;
+
+}
+
+$yanzhengjson = analyJson($upjson);
+
+//rss判断
+function analyrss($isrsslink){
+$isrsslink = file_get_contents($isrsslink);
 
 
+$aton = "http://www.w3.org/2005/Atom";
 
-if ($urlzhuangtai_1==1||$urlzhuangtai_2==1){
+$rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns";
+
+$rss = "http://purl.org/dc/elements/1.1/";
+
+$isatom = strstr($isrsslink,$atom);
+
+$isrdf = strstr($isrsslink,$rdf);
+
+$isrss = strstr($isrsslink,$rss);
+
+if($isatom||$isrdf||$isrss){
+return 1;
+}else{
+return 2;
+}
+
+}
+
+$yanzhengrss = analyrss($upjson);
+
+//输出
+
+
+if ($urlzhuangtai_1==1 && $urlzhuangtai_2==1){
+if($yanzhengjson==false && $yanzhengrss==2){
+echo "json或rss链接数据格式不正确";
+echo<<<EOT
+<a href="javascript:history.back(-1)" class="dropdown-toggle">
+               返回
+              </a>
+EOT;
+}else{
 echo "你提交的内容如下，请检查是否有误</br>";
 if ($urltype==1){
 echo  "类型：网站"."</br>";
@@ -65,6 +134,7 @@ echo<<<EOT
 <label><input name="reok" type="hidden" value="ok" /></label> 
 <input type="submit" value="确认提交" class="button"></form>
 EOT;
+}
 }else{
 echo "url不正确";
 echo<<<EOT

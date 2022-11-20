@@ -7,3 +7,7 @@
 2022.116 用户表单简单验证完成
 2022.1110搜索显示
 ![image](https://github.com/qidouhai/qiguai/blob/main/Snipaste_2022-11-14_10-16-31.png)
+
+增加rss收录和搜索及提交链接的数据格式判断
+
+下一步做交互和收录分级

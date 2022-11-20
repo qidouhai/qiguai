@@ -100,10 +100,10 @@ $re=mysqli_query($conn,$sqlp);
 mysqli_free_result($re);
    //关闭连接
    mysqli_close($conn);
-		echo "<script>alert('添加成功');location.href='http://www.hihot.cn/sousuo.html';</script>";
+		echo "<script>alert('添加成功');location.href='http://www.hihot.cn/proplus.html';</script>";
 		
 }else{
-echo "<script>alert('稍后尝试');location.href='http://www.hihot.cn/sousuo.html';</script>";
+echo "<script>alert('稍后尝试');location.href='http://www.hihot.cn/proplus.html';</script>";
 
 }
 ?>

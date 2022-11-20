@@ -2,6 +2,11 @@
 
  //接收内容
 $searchkeyword = $_POST["souname"];
+
+//rsstojson
+include ("./rsstojson.php");
+include ("./rssyan.php");
+
 /** 
 * @method 多维数组转字符串 
 * @param type $array 
@@ -32,25 +37,59 @@ $data=[];
       $url=$row["url"];
       $type=$row["type"];
       $sign=$row["sign"];
-   /*json  内容获取 */
-  
-$u=$jsonurl;
-$response = file_get_contents($u);
+	  
+	  //rss 判断
+	  
+	  $yanzhengrss = analyrss($jsonurl);
+	  
+	  if( $yanzhengrss ==1){
+	  $arr=rsstojson($jsonurl);  //rss 转json
+	  $arr= json_decode($arr,true); 
+	  foreach($arr as $key=>$value){
+	  
+	  foreach($value[item] as $key=>$value){
+	  $name = $value[title];
+	  $url=$value[link];
+	  
+	  if(strstr($name,$searchkeyword)){
+	  $giveup="?from=rss";
+	  if(strstr($url,$giveup)){
+	  $url=str_ireplace($giveup," ",$url);
+	  }else{
+	  
+	  $url=$url;
+	  	 }
+	 $data[$sign][$i]="<br><br><a href=".$url.">".$url."</a><br><a href=".$url.">".$name."</a><br><br>$searchresultsf<br><br>";
+	  }
+	  
+	  }
+	  }
+	  	  	  
+	  }else{
+	  
+	  /*json  内容获取 */
+	  
+	  $u=$jsonurl;
+	  $response = file_get_contents($u);
+		// $arr= json_decode($response,true);  
+		//$arr = arrayToString($arr);
+		$arr=$response;
+	       
+	  
+	  
 
- $arr= json_decode($response,true);
+	$counts = substr_count($arr,$searchkeyword); 
+	if($counts >0){
+	$searchresults = preg_replace("/<a[^>]+href=\"(.*?)\"[^>]+data-poster=\"(.*?)\"[^>]*>.*?<\/a>/is"," ",$arr);
+	$searchresultsf=strstr($searchresults ,$searchkeyword);
+	if($searchresultsf){
 
-
-$arr = arrayToString($arr);
-
-$counts = substr_count($arr,$searchkeyword); 
-if($counts >0){
-$searchresults = preg_replace("/<a[^>]+href=\"(.*?)\"[^>]+data-poster=\"(.*?)\"[^>]*>.*?<\/a>/is"," ",$arr);
-$searchresults=strstr($searchresults ,$searchkeyword);
-$searchresults=mb_substr($searchresults,0,50);
-//$data[$i]=$i;
-$data[$sign][$i]="<br><br><a href=".$url.">".$url."</a><br><a href=".$url.">".$name."</a><br><br>$searchresults<br><br>";
-
-}
+	$searchresultsf=mb_substr($searchresultsf,0,50);
+	//$data[$i]=$i;
+	$data[$sign][$i]="<br><br><a href=".$url.">".$url."</a><br><a href=".$url.">".$name."</a><br><br>$searchresultsf<br><br>";
+	}
+	}
+	}
 }
 return $data; 
 }
@@ -66,7 +105,12 @@ foreach (sou($searchkeyword)as $key=>$values ){
 foreach ($values as $key=>$value ){
 $redkeywords="<b><font size=5 color=#ff0000>".$searchkeyword."</font></b>";
 $value = preg_replace("/$searchkeyword/",$redkeywords,$value);
+
+if($value){
+$n=1;
+$n=$n+1;
 echo "<font size=5 color=#ff0000>".$key."</font><center>".$value."<hr></center>";
+}
 }
 }
 }else{

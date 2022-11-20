@@ -48,10 +48,10 @@ $data=[];
 	  foreach($arr as $key=>$value){
 	  
 	  foreach($value[item] as $key=>$value){
-	  $name = $value[title];
+	  $searchresultsf = $value[title];
 	  $url=$value[link];
 	  
-	  if(strstr($name,$searchkeyword)){
+	  if(strstr($searchresultsf,$searchkeyword)){
 	  $giveup="?from=rss";
 	  if(strstr($url,$giveup)){
 	  $url=str_ireplace($giveup," ",$url);
@@ -59,7 +59,7 @@ $data=[];
 	  
 	  $url=$url;
 	  	 }
-	 $data[$sign][$i]="<br><br><a href=".$url.">".$url."</a><br><a href=".$url.">".$name."</a><br><br>$searchresultsf<br><br>";
+	 $data[$sign][$i]="<br><br><a href=".$url.">".$url."</a><br><a href=".$url.">".$name."</a><br><br>".$searchresultsf."<br><br>";
 	  }
 	  
 	  }
@@ -86,7 +86,7 @@ $data=[];
 
 	$searchresultsf=mb_substr($searchresultsf,0,50);
 	//$data[$i]=$i;
-	$data[$sign][$i]="<br><br><a href=".$url.">".$url."</a><br><a href=".$url.">".$name."</a><br><br>$searchresultsf<br><br>";
+	$data[$sign][$i]="<br><br><a href=".$url.">".$url."</a><br><a href=".$url.">".$name."</a><br><br>".$searchresultsf."<br><br>";
 	}
 	}
 	}

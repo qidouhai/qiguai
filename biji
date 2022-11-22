@@ -1,1 +1,5 @@
-mb_convert_encoding php
+mb_convert_encoding
+
+urlencode 
+
+iconv

@@ -3,3 +3,9 @@ mb_convert_encoding
 urlencode 
 
 iconv
+
+
+//$arr= json_decode($response,true);  
+		//$arr = arrayToString($arr);
+		//$arr=urlencode($response);
+		//$contents = iconv("gb2312", "utf-8//IGNORE",$arr);

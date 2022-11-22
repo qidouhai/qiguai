@@ -7,6 +7,27 @@ $searchkeyword = $_POST["souname"];
 include ("./rsstojson.php");
 include ("./rssyan.php");
 
+//转码
+
+function decodeUnicode($str)
+
+{
+
+return preg_replace_callback('/\\\\u([0-9a-f]{4})/i',
+
+create_function(
+
+'$matches',
+
+'return mb_convert_encoding(pack("H*", $matches[1]), "UTF-8", "UCS-2BE");'
+
+),
+
+$str);
+
+}
+
+
 /** 
 * @method 多维数组转字符串 
 * @param type $array 
@@ -71,14 +92,10 @@ $data=[];
 	  
 	  $u=$jsonurl;
 	  $response = file_get_contents($u);
-		// $arr= json_decode($response,true);  
-		//$arr = arrayToString($arr);
-		$arr=$response;
-	       
-	  
-	  
-
-	$counts = substr_count($arr,$searchkeyword); 
+		
+		$arr=decodeUnicode($response);
+		
+	  	$counts = substr_count($arr,$searchkeyword); 
 	if($counts >0){
 	$searchresults = preg_replace("/<a[^>]+href=\"(.*?)\"[^>]+data-poster=\"(.*?)\"[^>]*>.*?<\/a>/is"," ",$arr);
 	$searchresultsf=strstr($searchresults ,$searchkeyword);
@@ -86,7 +103,7 @@ $data=[];
 
 	$searchresultsf=mb_substr($searchresultsf,0,50);
 	//$data[$i]=$i;
-	$data[$sign][$i]="<br><br><a href=".$url.">".$url."</a><br><a href=".$url.">".$name."</a><br><br>".$searchresultsf."<br><br>";
+	$data[$sign][$i]="<br><br><a href=".$url.">".$url."</a><br><a href=".$url.">".$name."</a><br><br>“.$searchresultsf.”<br><br>";
 	}
 	}
 	}

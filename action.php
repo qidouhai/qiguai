@@ -67,7 +67,7 @@ return FALSE;
 
 }
 
-return $result;
+return TRUE;
 
 }
 
@@ -78,23 +78,19 @@ function analyrss($isrsslink){
 $isrsslink = file_get_contents($isrsslink);
 
 
-$aton = "http://www.w3.org/2005/Atom";
+$atom = "http://www.w3.org/2005/Atom";
 
 $rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns";
 
 $rss = "http://purl.org/dc/elements/1.1/";
 
-$isatom = strstr($isrsslink,$atom);
+$isatom = stristr($isrsslink,$atom);
 
-$isrdf = strstr($isrsslink,$rdf);
+$isrdf = stristr($isrsslink,$rdf);
 
-$isrss = strstr($isrsslink,$rss);
+$isrss = stristr($isrsslink,$rss);
 
-if($isatom||$isrdf||$isrss){
-return 1;
-}else{
-return 2;
-}
+if($isatom){return 1;}elseif($isrdf){return 2;}elseif($isrss){return 3;}else{return 4;}
 
 }
 
@@ -104,14 +100,7 @@ $yanzhengrss = analyrss($upjson);
 
 
 if ($urlzhuangtai_1==1 && $urlzhuangtai_2==1){
-if($yanzhengjson==false && $yanzhengrss==2){
-echo "json或rss链接数据格式不正确";
-echo<<<EOT
-<a href="javascript:history.back(-1)" class="dropdown-toggle">
-               返回
-              </a>
-EOT;
-}else{
+if($yanzhengjson== TRUE){
 echo "你提交的内容如下，请检查是否有误</br>";
 if ($urltype==1){
 echo  "类型：网站"."</br>";
@@ -130,9 +119,39 @@ echo<<<EOT
               </a>
 EOT;
 echo<<<EOT
-<form action="/reok.php" method="post">
+<form action="http://www.hihot.cn/qiguai/reok.php" method="post">
 <label><input name="reok" type="hidden" value="ok" /></label> 
 <input type="submit" value="确认提交" class="button"></form>
+EOT;
+}elseif($yanzhengrss!=4){
+echo "你提交的内容如下，请检查是否有误</br>";
+if ($urltype==1){
+echo  "类型：网站"."</br>";
+}elseif($urltype==2){
+echo  "类型：小程序"."</br>";
+}else{
+echo  "类型：APP"."</br>";
+}
+ echo "JSON：".$upjson."</br>";
+echo "网址：".$upjsonsite."</br>";
+echo "网站名称：".$upjsonsitename."</br>";
+echo "网站标识：".$upsign."</br>";
+echo<<<EOT
+<a href="javascript:history.back(-1)" class="dropdown-toggle">
+               返回修改
+              </a>
+EOT;
+echo<<<EOT
+<form action="http://www.hihot.cn/qiguai/reok.php" method="post">
+<label><input name="reok" type="hidden" value="ok" /></label> 
+<input type="submit" value="确认提交" class="button"></form>
+EOT;
+}else{
+echo "json或rss链接据格式不正确";
+echo<<<EOT
+<a href="javascript:history.back(-1)" class="dropdown-toggle">
+               返回
+              </a>
 EOT;
 }
 }else{

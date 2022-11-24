@@ -3,6 +3,8 @@ session_start();
 header('content-type:text/html;charset=utf-8');   
 //接收内容
 
+$rssjson = $_POST["rssorjson"];	//rss 或 json
+
 $urltype = $_POST["urltype"];  //站点/小程序/app的类型 （1 网站 2 小程序 3 app ）
 
 $upjson = trim($_POST["upjson"]);    //json网址链接
@@ -13,11 +15,36 @@ $upjsonsitename =  trim($_POST["upjsonsitename"]);   //站点名称
 
 $upsign = trim($_POST["sign"]);    //站点标识
 
+
+
+if($urltype==" "){
+echo "不支持提交空数据";
+echo "<script>alert('稍后尝试');location.href='http://www.baidu.com';</script>";
+die;
+}elseif($upjson==" "){
+echo "不支持提交空数据";
+echo "<script>alert('稍后尝试');location.href='http://www.baidu.com';</script>";
+die;
+}elseif($upjsonsite==" "){
+echo "不支持提交空数据";
+echo "<script>alert('稍后尝试');location.href='http://www.360.cn';</script>";
+die;
+}elseif($upjsonsitename==" "){
+echo "不支持提交空数据";
+echo "<script>alert('稍后尝试');location.href='http://www.sogou.com';</script>";
+die;
+}elseif($upsign==" "){
+echo "不支持提交空数据";
+echo "<script>alert('稍后尝试');location.href='http://www.qq.com';</script>";
+die;
+}
+
 $_SESSION['urltype'] = $urltype;
 $_SESSION['upjson'] = $upjson;
 $_SESSION['upjsonsite'] = $upjsonsite;
 $_SESSION['upjsonsitename'] = $upjsonsitename;
 $_SESSION['sign'] = $upsign;
+
 
 
 //url验证
@@ -96,6 +123,25 @@ if($isatom){return 1;}elseif($isrdf){return 2;}elseif($isrss){return 3;}else{ret
 
 $yanzhengrss = analyrss($upjson);
 
+//rssjson 不为空
+if($rssjson==" "){
+echo "您没有选择提交类型（rss 或 json）";
+echo<<<EOT
+<a href="javascript:history.back(-1)" class="dropdown-toggle">
+               返回
+              </a>
+EOT;
+die;
+}else{
+
+//rss json 分别提交前检测
+if($rssjson==5 && $yanzhengrss <> 4){
+$reok="http://www.hihot.cn/qiguai/rssreok.php";
+}else{
+$reok="http://www.hihot.cn/qiguai/reok.php";
+
+}
+}
 //输出
 
 
@@ -119,7 +165,7 @@ echo<<<EOT
               </a>
 EOT;
 echo<<<EOT
-<form action="http://www.hihot.cn/qiguai/reok.php" method="post">
+<form action="$reok" method="post">
 <label><input name="reok" type="hidden" value="ok" /></label> 
 <input type="submit" value="确认提交" class="button"></form>
 EOT;
@@ -137,19 +183,19 @@ echo "网址：".$upjsonsite."</br>";
 echo "网站名称：".$upjsonsitename."</br>";
 echo "网站标识：".$upsign."</br>";
 echo<<<EOT
-<a href="javascript:history.back(-1)" class="dropdown-toggle">
+<a href="javascript:history.back(-2)" class="dropdown-toggle">
                返回修改
               </a>
 EOT;
 echo<<<EOT
-<form action="http://www.hihot.cn/qiguai/reok.php" method="post">
+<form action="$reok" method="post">
 <label><input name="reok" type="hidden" value="ok" /></label> 
 <input type="submit" value="确认提交" class="button"></form>
 EOT;
 }else{
 echo "json或rss链接据格式不正确";
 echo<<<EOT
-<a href="javascript:history.back(-1)" class="dropdown-toggle">
+<a href="javascript:history.back(-2)" class="dropdown-toggle">
                返回
               </a>
 EOT;
@@ -157,8 +203,8 @@ EOT;
 }else{
 echo "url不正确";
 echo<<<EOT
-<a href="javascript:history.back(-1)" class="dropdown-toggle">
-               返回
+<a href="http://www.hihot.cn/qiguai/tijiao.html" class="dropdown-toggle">
+               返回修改
               </a>
 EOT;
 }

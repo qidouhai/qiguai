@@ -16,7 +16,6 @@ $upjsonsitename =  trim($_POST["upjsonsitename"]);   //站点名称
 $upsign = trim($_POST["sign"]);    //站点标识
 
 
-
 if($urltype==" "){
 echo "不支持提交空数据";
 echo "<script>alert('稍后尝试');location.href='http://www.baidu.com';</script>";
@@ -133,6 +132,33 @@ echo<<<EOT
 EOT;
 die;
 }else{
+
+//rss 链接不能选择json
+//json 不能选择rss 判定
+
+if($yanzhengrss <> 4)
+{if($rssjson!==5){
+echo "您选择的类型有错误（rss 或 json）";
+echo<<<EOT
+<a href="javascript:history.back(-1)" class="dropdown-toggle">
+               返回
+              </a>
+EOT;
+die;
+}
+} 
+if($yanzhengjson){
+if($rssjson!==6){
+echo "您选择的类型有错误（rss 或 json）";
+echo<<<EOT
+<a href="javascript:history.back(-1)" class="dropdown-toggle">
+               返回
+              </a>
+EOT;
+die;
+}
+}
+
 
 //rss json 分别提交前检测
 if($rssjson==5 && $yanzhengrss <> 4){

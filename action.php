@@ -110,13 +110,17 @@ $rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns";
 
 $rss = "http://purl.org/dc/elements/1.1/";
 
+$rss2 = "rss version=\"2.0\"";
+
 $isatom = stristr($isrsslink,$atom);
 
 $isrdf = stristr($isrsslink,$rdf);
 
 $isrss = stristr($isrsslink,$rss);
 
-if($isatom){return 1;}elseif($isrdf){return 2;}elseif($isrss){return 3;}else{return 4;}
+$isrss2=strstr($isrsslink,$rss2);
+
+if($isatom){return 1;}elseif($isrdf){return 2;}elseif($isrss){return 3;}elseif($isrss){return 4;}else{return 5;}
 
 }
 
@@ -136,9 +140,8 @@ die;
 //rss 链接不能选择json
 //json 不能选择rss 判定
 
-if($yanzhengrss <> 4)
-{if($rssjson!==5){
-echo "您选择的类型有错误（rss 或 json）";
+if($yanzhengrss <> 5){if($rssjson!=5){
+echo "您选择的类型有错误（请选择rss）";
 echo<<<EOT
 <a href="javascript:history.back(-1)" class="dropdown-toggle">
                返回
@@ -147,9 +150,9 @@ EOT;
 die;
 }
 } 
-if($yanzhengjson){
+if($yanzhengjson==true){
 if($rssjson!==6){
-echo "您选择的类型有错误（rss 或 json）";
+echo "您选择的类型有错误（请选择 json）";
 echo<<<EOT
 <a href="javascript:history.back(-1)" class="dropdown-toggle">
                返回
@@ -161,7 +164,7 @@ die;
 
 
 //rss json 分别提交前检测
-if($rssjson==5 && $yanzhengrss <> 4){
+if($rssjson==5 && $yanzhengrss <> 5){
 $reok="http://www.hihot.cn/qiguai/rssreok.php";
 }else{
 $reok="http://www.hihot.cn/qiguai/reok.php";
@@ -195,7 +198,7 @@ echo<<<EOT
 <label><input name="reok" type="hidden" value="ok" /></label> 
 <input type="submit" value="确认提交" class="button"></form>
 EOT;
-}elseif($yanzhengrss!=4){
+}elseif($yanzhengrss!=5){
 echo "你提交的内容如下，请检查是否有误</br>";
 if ($urltype==1){
 echo  "类型：网站"."</br>";

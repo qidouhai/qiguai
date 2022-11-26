@@ -63,7 +63,7 @@ return 2;
 
 $urlzhuangtai_1=or_url($upjson);
 $urlzhuangtai_2=or_url($upjsonsite);
-
+$urlzhuangtai_3=or_url($upjsonsite);
 
 /**
 
@@ -174,7 +174,7 @@ $reok="http://www.hihot.cn/qiguai/reok.php";
 //输出
 
 
-if ($urlzhuangtai_1==1 && $urlzhuangtai_2==1){
+if ($urlzhuangtai_1==1 && $urlzhuangtai_2==1 && $urlzhuangtai_3==1){
 if($yanzhengjson== TRUE){
 echo "你提交的内容如下，请检查是否有误</br>";
 if ($urltype==1){

@@ -118,9 +118,9 @@ $isrdf = stristr($isrsslink,$rdf);
 
 $isrss = stristr($isrsslink,$rss);
 
-$isrss2=strstr($isrsslink,$rss2);
+$isrss2 = stristr($isrsslink,$rss2);
 
-if($isatom){return 1;}elseif($isrdf){return 2;}elseif($isrss){return 3;}elseif($isrss){return 4;}else{return 5;}
+if($isatom){return 1;}elseif($isrdf){return 2;}elseif($isrss){return 3;}elseif($isrss2){return 4;}else{return 5;}
 
 }
 
